@@ -18,7 +18,7 @@ class Message(BaseModel):
 
 origins = [
     "*",
-    "http://localhost:5709/"
+    "http://localhost:6434/"
 ]
 
 app.add_middleware(
@@ -28,11 +28,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
-
-@app.get("/")
-async def read_root():
-    return {"message": "Hello, World!"}
 
 @app.get("/messages")
 async def get_initial_message():

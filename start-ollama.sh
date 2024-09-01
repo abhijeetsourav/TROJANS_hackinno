@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MODEL_DIR="/root/.ollama/models/manifests/registry.ollama.ai/library/mistral"
+MODEL_DIR="/root/.ollama/models/manifests/registry.ollama.ai/library/phi3"
 
 ollama serve &
 
@@ -8,11 +8,11 @@ echo 'Waiting for Ollama service to start...'
 sleep 30
 
 if [ ! "$(ls -A $MODEL_DIR)" ]; then
-    echo 'Mistral model not found, downloading...'
-    ollama pull mistral:latest
+    echo 'phi model not found, downloading...'
+    ollama pull phi3
     echo 'Model downloaded successfully.'
 else
-    echo 'Mistral model already present, skipping download.'
+    echo 'phi3 model already present, skipping download.'
 fi
 
 # Keep the container running
