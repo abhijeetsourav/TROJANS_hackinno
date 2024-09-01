@@ -116,7 +116,7 @@ function MyApp() {
 
   return (
     <App>
-      {enterDB? null : <div className="full-page-container">
+      {/* {enterDB? null : <div className="full-page-container">
         <div className="input-wrapper">
           <input
             type="text"
@@ -126,7 +126,7 @@ function MyApp() {
           {error ? <p style={{ color: 'red' }}>Enter a valid database link</p> : null}
           <button onClick={handleSubmit}>Submit</button>
         </div>
-      </div>}
+      </div>} */}
       <View main className="safe-areas" url="/">
         <Page>
           <Navbar>

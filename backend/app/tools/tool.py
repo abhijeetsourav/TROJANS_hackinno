@@ -45,34 +45,9 @@ class MongodbTool:
         result = collection.find(query_dict)
         return list(result)
 
-
-class OllamaTool:
-    def __init__(self, model_name):
-        self.model_name = model_name
-
-    def run(self, prompt):
-        """
-        Perform task as assigned by the agents using the Ollama model.
-
-        Args:
-            prompt (str): The input prompt to process.
-
-        Returns:
-            str: The processed output from the model.
-        """
-        # Use the Ollama API or the appropriate Ollama Python client for text generation
-        import subprocess
-
-        command = f"ollama generate {self.model_name} --prompt '{prompt}'"
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        if result.returncode != 0:
-            raise RuntimeError(f"Failed to generate text: {result.stderr}")
-        return result.stdout.strip()
-
 class RetriverAgent:
-    def __init__(self, llm_tool):
-        # print(llm_tool)
-        self.llm_tool = llm_tool
+    def __init__(self):
+        pass
 
     def run(self, user_input):
         database_info = """
@@ -106,26 +81,25 @@ class RetriverAgent:
         Output:
         """
         # print(prompt)
-        return self.llm_tool.run(prompt)
+        return prompt
 
 
-class ChatbotPipeline:
-    def __init__(self, retriver_agent, mongo_tool):
-        self.retriver_agent = retriver_agent
-        self.mongo_tool = mongo_tool
-        # self.cognitive_agent = cognitive_agent
+class CognitiveAgent:
+    def _init_(self):
+        pass
 
-    def run(self, user_input):
-        # Step 1: Convert natural language to MongoDB query
-        mongo_query = self.retriver_agent.run(user_input)
-        print(f"Generated MongoDB Query: {mongo_query}")
+    def run(self, user_input, query_result):
+        prompt = f"""
+        You are an AI assistant that converts MongoDB query results into human-readable natural language responses based on the question asked.
+        Example:
+        Input:
+        question : list of stores with capture count greater then 50
+        data : [{{'_id': ObjectId('66bc422ab02a0f30e499b362'), 'store_id': ObjectId('665598dae2c81415d464c64c'), 'name': 'BB-GHAZIABAD-OPULENT MALL-ED', 'capture_count': 68, 'beauty_capture_count': 10, 'osa': 99.83661764705883, 'beauty_osa': 49.375, 'anomaly_count': 19, 'beauty_anomaly_count': 2, 'vm': 72.05882352941177, 'capture_percentage': 100.0, 'beauty_capture_percentage': 100.0, 'timestamps': datetime.datetime(2024, 8, 2, 0, 0)}}, {{'_id': ObjectId('66bc422bb02a0f30e499b3c8'), 'store_id': ObjectId('6655a6f7b7950d9c3333f9e2'), 'name': 'BB- MAHAGUN MALL-GHAZIABAD', 'capture_count': 136, 'beauty_capture_count': 0, 'osa': 100.0, 'beauty_osa': 0, 'anomaly_count': 21, 'beauty_anomaly_count': 0, 'vm': 84.55882352941177, 'capture_percentage': 100.0, 'beauty_capture_percentage': 0, 'timestamps': datetime.datetime(2024, 8, 2, 0, 0)}}]
+        Output: "I found 2 stores with capture count greater then 50:
+        BB-GHAZIABAD-OPULENT MALL-ED, capture_count is 68
+        BB- MAHAGUN MALL-GHAZIABAD, capture_count is 136."
 
-        # Step 2: Fetch data from MongoDB using the generated query
-        result = self.mongo_tool.run(mongo_query)
-        if len(result) > 10:
-            result = result[0:10]
-        print(f"Fetched Result: {result}")
-
-        # Step 3: Convert the MongoDB result to a natural language response
-        # natural_language_response = self.cognitive_agent.run(user_input, str(result))
-        return result
+        Input: question: {user_input}, data: {query_result}
+        Output:
+        """
+        return prompt
