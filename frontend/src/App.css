@@ -1,0 +1,36 @@
+
+
+.full-page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw; 
+    background-color: #f0f0f0; 
+  }
+  
+  .input-wrapper {
+    text-align: center;
+  }
+  
+  .input-wrapper input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+    margin-bottom: 10px;
+  }
+  
+  .input-wrapper button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .input-wrapper button:hover {
+    background-color: #0056b3;
+  }
+  

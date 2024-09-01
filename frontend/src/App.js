@@ -14,8 +14,12 @@ import {
   f7
 } from 'framework7-react';
 import axios from 'axios';
+import './App.css';
 
 function MyApp() {
+  const inputRef = useRef();
+  const [enterDB, setEnterDB] = useState(false);
+  const [error, setError] = useState(false)
   const [messageText, setMessageText] = useState('');
   const [messagesData, setMessagesData] = useState([]);
   const [attachments, setAttachments] = useState([]);
@@ -46,7 +50,7 @@ function MyApp() {
   }, []);
 
   useEffect(() => {
-    ws.current = new WebSocket('ws://localhost:80/ws');
+    ws.current = new WebSocket('ws://localhost:8000/ws');
     ws.current.onopen = () => console.log('WebSocket connected');
     ws.current.onerror = (error) => console.error('WebSocket error:', error);
 
@@ -71,7 +75,7 @@ function MyApp() {
 
   const fetchInitialMessage = async () => {
     try {
-      const response = await axios.get('http://0.0.0.0:80/messages');
+      const response = await axios.get('http://0.0.0.0:8000/messages');
       setMessagesData([{ text: response.data.message, type: 'received' }]);
       setLastMessageIndex(lastMessageIndex + 1);
     } catch (error) {
@@ -100,8 +104,29 @@ function MyApp() {
     setMessagesData(messagesData.map((msg, idx) => idx === index ? { ...msg, text: newText || msg.text, image: newImage || msg.image } : msg));
   };
 
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleSubmit = () => {
+    if (emailPattern.test(inputRef.current.value)) {
+      setEnterDB(true);
+    } else {
+      setError(true);
+    }
+  }
+
   return (
     <App>
+      {enterDB? null : <div className="full-page-container">
+        <div className="input-wrapper">
+          <input
+            type="text"
+            ref={inputRef}
+            placeholder="Enter database..."
+          />
+          {error ? <p style={{ color: 'red' }}>Enter a valid database link</p> : null}
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      </div>}
       <View main className="safe-areas" url="/">
         <Page>
           <Navbar>

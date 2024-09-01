@@ -9,6 +9,7 @@ OLLAMA_PORT = 11434
 OLLAMA_BASE_URL = f"http://{OLLAMA_HOST}:{OLLAMA_PORT}"
 
 llm = Ollama(model="phi3", temperature=0, base_url=OLLAMA_BASE_URL)
+# llm._generate("How's the weather today..?")
 
 
 app = FastAPI()
