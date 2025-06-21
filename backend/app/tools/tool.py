@@ -55,27 +55,14 @@ class RetriverAgent:
         Collection_name: store_analysis
         """
         schema_example = """
-        _id: ['ObjectId']
-        store_id: ['ObjectId']
-        name: ['str']
-        capture_count: ['int']
-        beauty_capture_count: ['int']
-        osa: ['float']
-        beauty_osa: ['int', 'float']
-        anomaly_count: ['int']
-        beauty_anomaly_count: ['int']
-        vm: ['float']
-        capture_percentage: ['float']
-        beauty_capture_percentage: ['int', 'float']
-        timestamps: ['datetime']
         """
         prompt = f"""
         You are an AI assistant that converts natural language instructions into MongoDB queries.
         Database Information: {database_info}
         Schema example: {schema_example}
         Example:
-        Input: "give me the list of product only that have discount greater than 500"
-        Output: db.collection_name{{ "discount": {{ "$gt": 500 }} }}
+        Input: 
+        Output: 
 
         Input: {user_input}
         Output:
@@ -93,11 +80,9 @@ class CognitiveAgent:
         You are an AI assistant that converts MongoDB query results into human-readable natural language responses based on the question asked.
         Example:
         Input:
-        question : list of stores with capture count greater then 50
-        data : [{{'_id': ObjectId('66bc422ab02a0f30e499b362'), 'store_id': ObjectId('665598dae2c81415d464c64c'), 'name': 'BB-GHAZIABAD-OPULENT MALL-ED', 'capture_count': 68, 'beauty_capture_count': 10, 'osa': 99.83661764705883, 'beauty_osa': 49.375, 'anomaly_count': 19, 'beauty_anomaly_count': 2, 'vm': 72.05882352941177, 'capture_percentage': 100.0, 'beauty_capture_percentage': 100.0, 'timestamps': datetime.datetime(2024, 8, 2, 0, 0)}}, {{'_id': ObjectId('66bc422bb02a0f30e499b3c8'), 'store_id': ObjectId('6655a6f7b7950d9c3333f9e2'), 'name': 'BB- MAHAGUN MALL-GHAZIABAD', 'capture_count': 136, 'beauty_capture_count': 0, 'osa': 100.0, 'beauty_osa': 0, 'anomaly_count': 21, 'beauty_anomaly_count': 0, 'vm': 84.55882352941177, 'capture_percentage': 100.0, 'beauty_capture_percentage': 0, 'timestamps': datetime.datetime(2024, 8, 2, 0, 0)}}]
-        Output: "I found 2 stores with capture count greater then 50:
-        BB-GHAZIABAD-OPULENT MALL-ED, capture_count is 68
-        BB- MAHAGUN MALL-GHAZIABAD, capture_count is 136."
+        question : 
+        data : 
+        Output: 
 
         Input: question: {user_input}, data: {query_result}
         Output:
